@@ -1,0 +1,135 @@
+/* 浮字的樣式 */
+.float-text {
+    position: fixed;
+    font-size: 24px;
+    color: gold;
+    pointer-events: none;
+    animation: floatUp 1s ease-out forwards;
+}
+
+/* 浮字動畫：往上移動並淡出 */
+@keyframes floatUp {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-80px);
+        opacity: 0;
+    }
+}
+
+
+
+/* 讓整個頁面內容置中 */
+body {
+    text-align: center;
+    background: linear-gradient(180deg, #dcb772, #37284f);
+    min-height: 100vh;
+    /* 確保漸層撐滿整個視窗高度 */
+}
+
+h1 {
+
+    margin: 50px;
+}
+
+p {
+    margin: 20px;
+}
+
+/* 整個功德區塊 */
+#merit {
+    font-size: 24px;
+}
+
+/* 單獨控制數字大小 */
+#count {
+    font-size: 200px;
+    color: rgb(52, 16, 60);
+}
+
+
+/* 容器：讓裡面的元素可以用絕對定位疊加 */
+#muyu-wrap {
+    position: relative;
+    /* 子元素的定位基準點 */
+    display: inline-block;
+    /* 讓容器大小跟著內容走 */
+    cursor: pointer;
+    width: 200px;
+
+    /* 以下三行讓容器永遠水平置中 */
+    display: block;
+    /* 讓 margin: auto 生效 */
+    margin: 0 auto;
+    /* 左右自動分配，永遠置中 */
+    /* 只加上下間距 */
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+
+#muyu {
+    width: 200px;
+    transform-origin: center;
+    /* 縮放的基準點在中心 */
+}
+
+/* 木魚棒圖片 */
+#stick {
+    width: 100px;
+    position: absolute;
+    /* 疊在木魚上方 */
+    top: 2px;
+    /* 預設位置在木魚上面 */
+    left: 90%;
+    transform: translateX(-40%) rotate(70deg);
+    /* 水平置中，預設稍微傾斜 */
+    transform-origin: bottom center;
+    /* 旋轉的基準點在棒子底部，模擬握住的感覺 */
+}
+
+
+/* 木魚棒敲下去的動畫 */
+@keyframes stickHit {
+    0% {
+        transform: translateX(-40%) rotate(-70deg);
+    }
+
+    /* 預設角度 */
+    40% {
+        transform: translateX(-40%) rotate(40deg);
+    }
+
+    /* 往下敲 */
+
+}
+
+/* 木魚被敲縮小再放大的動畫 */
+@keyframes muyuHit {
+    0% {
+        transform: scale(1);
+    }
+
+    40% {
+        transform: scale(0.92);
+    }
+
+    /* 稍微縮小 */
+    100% {
+        transform: scale(1);
+    }
+
+    /* 放大回原樣 */
+}
+
+/* 播放動畫時套用的 class */
+#stick.hitting {
+    animation: stickHit 0.3s ease-out forwards;
+}
+
+#muyu.hitting {
+    animation: muyuHit 0.3s ease-out forwards;
+}

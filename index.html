@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>電子木魚</title>
+    <!-- 引入外部 CSS 檔案 -->
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+    <h1>電子木魚</h1>
+
+    <!-- 顯示功德數字，id="count" 讓 JS 找到它 -->
+    <p id="merit">功德
+        <br>
+        <span id="count">0</span>
+    </p>
+
+    <!-- 用一個 div 把木魚棒和木魚包在一起，方便疊加定位 -->
+    <div id="muyu-wrap" onclick="knock()">
+
+        <!-- 木魚 -->
+        <img id="muyu" src="muyu.png" alt="木魚">
+
+        <!-- 木魚棒，預設在木魚上方 -->
+        <img id="stick" src="stick.png" alt="木魚棒">
+
+    </div>
+
+
+
+    <button id="restart" onclick="restart()">重新開始</button>
+
+    <!-- 引入外部 JS 檔案，放在 body 最底部確保 HTML 先載入完畢 -->
+    <script src="script.js"></script>
+
+
+
+</body>
+
+</html>
