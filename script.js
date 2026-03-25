@@ -25,16 +25,16 @@ async function startGame() {
         alert('請輸入名字！');
         return;
     }
-/*
-    // 檢查排行榜是否已有同名玩家
-    const data = await getLeaderboard();
-    const isDuplicate = data.some(item => item.name === name);
-
-    if (isDuplicate) {
-        alert(`「${name}」已經有人用了，請換一個法號！`);
-        return;
-    }
-*/
+    /*
+        // 檢查排行榜是否已有同名玩家
+        const data = await getLeaderboard();
+        const isDuplicate = data.some(item => item.name === name);
+    
+        if (isDuplicate) {
+            alert(`「${name}」已經有人用了，請換一個法號！`);
+            return;
+        }
+    */
     // 儲存名字
     playerName = name;
 
@@ -155,19 +155,24 @@ function restart() {
 
 // 載入排行榜
 async function loadLeaderboard() {
-    const list = document.getElementById('leaderboard-list');
+    const tbody = document.getElementById('leaderboard-body');
 
     // 清空舊資料
-    list.innerHTML = '';
+    tbody.innerHTML = '';
 
     const data = await getLeaderboard();
 
-    // 把每筆資料加入排行榜
+    // 每筆資料產生一列
     data.forEach((item, index) => {
-        const li = document.createElement('li');
-        li.textContent = `${item.name}：${item.score} 功德`;
-        list.appendChild(li);
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+      <td>${index + 1}</td>
+      <td>${item.name}</td>
+      <td>${item.score}</td>
+    `;
+        tbody.appendChild(tr);
     });
+
 }
 
 
@@ -190,8 +195,8 @@ document.addEventListener('keydown', function (e) {
 document.getElementById('start-btn').addEventListener('click', startGame);
 
 // 點隨機法號按鈕，自動填入輸入框
-document.getElementById('random-btn').addEventListener('click', function() {
-  document.getElementById('player-name').value = getRandomName();
+document.getElementById('random-btn').addEventListener('click', function () {
+    document.getElementById('player-name').value = getRandomName();
 });
 
 // 頁面載入時自動顯示排行榜

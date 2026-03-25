@@ -57,17 +57,39 @@ body {
     background: linear-gradient(180deg, #dcb772, #37284f);
     min-height: 100vh;
     /* 確保漸層撐滿整個視窗高度 */
+    zoom: 0.9;  /* 縮小到 90% */
 }
 
+/* 消除點擊圖片時出現的藍框 */
+* {
+    -webkit-tap-highlight-color: transparent;
+}
 
+*:focus {
+    outline: none !important;
+}
 
-p {
-    margin: 20px;
+p{
+    margin: 0px;
 }
 
 /* 整個功德區塊 */
+#merit-area{
+
+}
+
 #merit {
     font-size: 24px;
+    margin: 10px 0px;
+}
+
+/* 單獨控制數字大小 */
+#count {
+    font-size: 200px;
+    color: rgb(52, 16, 60);
+    position: relative;
+    top: -25px;
+    margin: 0%;
 }
 
 
@@ -75,12 +97,16 @@ p {
 /* 主容器：預設為垂直排列（適合手機） */
 .main-container {
     display: flex;
-    flex-direction: column; /* 讓子元素像疊樂高一樣上下排 */
-    align-items: center;    /* 水平居中 */
-    gap: 30px;              /* 區塊之間的間距 */
+    flex-direction: column;
+    /* 讓子元素像疊樂高一樣上下排 */
+    align-items: center;
+    /* 水平居中 */
+    gap: 10px;
+    /* 區塊之間的間距 */
     width: 100%;
     padding: 10px;
-    box-sizing: border-box; /* 確保 padding 不會撐破寬度 */
+    box-sizing: border-box;
+    /* 確保 padding 不會撐破寬度 */
 }
 
 /* 遊戲區塊基礎樣式 */
@@ -88,7 +114,8 @@ p {
     width: 100%;
     max-width: 600px;
     text-align: center;
-    padding: 20px;
+    padding: 20px ;
+    padding-bottom: 100px;
     box-sizing: border-box;
 }
 
@@ -104,6 +131,29 @@ p {
 
 }
 
+#leaderboard-list {
+    width: 100%;
+    border-collapse: collapse;      /* 合併邊框，不會有雙線 */
+    margin-top: 10px;
+}
+
+#leaderboard-list th,
+#leaderboard-list td {
+    padding: 8px 12px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+#leaderboard-list th {
+    font-weight: 500;
+    color: gold;
+}
+
+/* 滑鼠移到某列時高亮 */
+#leaderboard-list tbody tr:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
 /* 意思：選取 id 為 leaderboard 裡面所有的 h2 標籤 */
 #leaderboard h2 {
     text-align: center;
@@ -112,11 +162,11 @@ p {
 #refresh-btn {
     /* 1. 將按鈕從「行內元素」變成「區塊元素」 */
     display: block;
-    
+
     /* 2. 左右邊距設為自動（auto），它就會推到中間 */
     margin-left: auto;
     margin-right: auto;
-    
+
     /* 3. 加上上方的間距 */
     margin-top: 15px;
 }
@@ -124,35 +174,64 @@ p {
 
 /* --- 2. 響應式切換：大螢幕 (電腦版) --- */
 /* 當視窗寬度大於 992px 時執行以下樣式 */
-@media (min-width: 992px) {
+@media (min-width: 823px) {
     .main-container {
-        flex-direction: row;      /* 切換為水平排列 */
-        justify-content: center;  /* 整體水平居中 */
-        /* align-items: flex-start;  讓兩個區塊對齊頂部，不要被拉長 */
-        max-width: 1200px;        /* 寬螢幕時限制總寬度 */
-
+        flex-direction: row;
+        /* 切換為水平排列 */
+        justify-content: center;
+        /* 整體水平居中 */
+        /* align-items: flex-start;  讓兩個區塊對齊頂部，不要被拉長  */
+        max-width: 1200px;
+        /* 寬螢幕時限制總寬度 */
+        max-height: max-content;
         padding: 20px;
     }
 
     /* 調整順序：讓排行榜 (order: 1) 出現在遊戲區 (order: 2) 的左邊 */
     #leaderboard {
-        flex: 1;           /* 佔據一份空間 */
-        order: 1;          /* 順序設為 1，會排在最左邊 */
-        max-width: 300px;  /* 限制排行榜寬度，不要太寬 */
-        margin: 0;                /* 取消手機版的 margin */
+        flex: 1;
+        /* 佔據一份空間 */
+        order: 1;
+        /* 順序設為 1，會排在最左邊 */
+        max-width: 250px;
+        /* 限制排行榜寬度，不要太寬 */
+        margin: 0;
+        /* 取消手機版的 margin */
+        position: relative;
+        z-index: 10;
+
     }
 
     #game-area {
-        flex: 2;           /* 遊戲區佔據較大的空間 (兩份) */
-        order: 2;          /* 順序設為 2，排在右邊 */
-        max-width: none;          /* 取消手機版的 600px 限制 */
+        flex: 2;
+        /* 遊戲區佔據較大的空間 (兩份) */
+        order: 2;
+        /* 順序設為 2，排在右邊 */
+        max-width: none;
+        /* 取消手機版的 600px 限制 */
     }
 
     #leaderboard h2 {
-    text-align: center;
-    }   
+        text-align: center;
+    }
 
+    .button-area {
+    position: absolute;
+    /* 脫離文件流，不影響 flex 置中 */
+    right: -20px;
+    /* 貼緊父容器右側，數值可依需求調整 */
+    top: 100px;
+    /* 垂直置中起始點 */
+    transform: translateY(-50%);
+    /* 修正垂直置中偏移 */
+    display: flex;
+    /* 讓按鈕橫向排列 */
+    gap: 10px;
+    /* 按鈕之間的間距 */
 
+    z-index: 10;
+    /* 確保在 h1 之上 */
+}
 
 }
 
@@ -169,9 +248,9 @@ p {
     align-items: center;
     width: 100%;
     max-width: 1000px;
-    margin: 40px   auto;
+    margin: 10px auto;
     /* 調整上下間距並水平置中 */
-    padding: 20px 0;
+    padding: 10px 0;
 }
 
 h1 {
@@ -183,31 +262,38 @@ h1 {
 
 /* 懸浮功能面板：定位到左上層 */
 .button-area {
-    position: absolute;    /* 脫離文件流，不影響 flex 置中 */
-    right: -60px;    /* 貼緊父容器右側，數值可依需求調整 */
-    top: 50%;    /* 垂直置中起始點 */
-    transform: translateY(-50%);   /* 修正垂直置中偏移 */
-    display: flex;          /* 讓按鈕橫向排列 */
-    gap: 10px;              /* 按鈕之間的間距 */
+    position: absolute;
+    /* 脫離文件流，不影響 flex 置中 */
+
+    top: 600px;
+    /* 垂直置中起始點 */
+    transform: translateY(-50%);
+    /* 修正垂直置中偏移 */
+    display: flex;
+    /* 讓按鈕橫向排列 */
+    gap: 10px;
+    /* 按鈕之間的間距 */
 
     z-index: 10;
     /* 確保在 h1 之上 */
 }
 
 /* 按鈕通用樣式 */
-#submit-btn, #restart {
+#submit-btn,
+#restart {
     padding: 8px 16px;
     border: none;
     border-radius: 8px;
     font-size: 14px;
     cursor: pointer;
-    white-space: nowrap;    /* 防止文字折行 */
+    white-space: nowrap;
+    /* 防止文字折行 */
     transition: all 0.2s;
 }
 
 /* 提交按鈕顏色 */
 #submit-btn {
-    background-color: rgba(255, 192, 55, 0.922) ;
+    background-color: rgba(255, 192, 55, 0.922);
     color: white;
     box-shadow: 2px 2px 5px rgba(255, 28, 28, 0.1);
 }
@@ -219,9 +305,11 @@ h1 {
     border: 1px solid #ccc;
 }
 
-#submit-btn:hover, #restart:hover {
+#submit-btn:hover,
+#restart:hover {
     opacity: 0.8;
-    transform: translateY(-2px); /* 懸浮時稍微往上飄 */
+    transform: translateY(-2px);
+    /* 懸浮時稍微往上飄 */
 }
 
 
@@ -229,11 +317,6 @@ h1 {
     margin: 5px;
 }
 
-/* 單獨控制數字大小 */
-#count {
-    font-size: 200px;
-    color: rgb(52, 16, 60);
-}
 
 
 /* 容器：讓裡面的元素可以用絕對定位疊加 */
@@ -250,9 +333,10 @@ h1 {
     /* 讓 margin: auto 生效 */
     margin: 0 auto;
     /* 左右自動分配，永遠置中 */
-    /* 只加上下間距 */
-    margin-top: 10px;
-    margin-bottom: 20px;
+    
+    top: -25px;
+
+
 }
 
 
@@ -264,10 +348,10 @@ h1 {
 
 /* 木魚棒圖片 */
 #stick {
-    width: 100px;
+    width: 150px;
     position: absolute;
     /* 疊在木魚上方 */
-    top: 2px;
+    top: -20px;
     /* 預設位置在木魚上面 */
     left: 90%;
     transform: translateX(-40%) rotate(70deg);
@@ -318,7 +402,3 @@ h1 {
 #muyu.hitting {
     animation: muyuHit 0.3s ease-out forwards;
 }
-
-
-
-

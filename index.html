@@ -40,10 +40,13 @@
 
 
             <!-- 顯示功德數字，id="count" 讓 JS 找到它 -->
-            <p id="merit">功德
-                <br>
-                <span id="count">0</span>
-            </p>
+            <div id="merit-area">
+                <p id="merit">功德</p>
+                    <br>
+                    <p><span id="count">0</span></p>
+                
+            </div>
+
 
             <!-- 用一個 div 把木魚棒和木魚包在一起，方便疊加定位 -->
             <div id="muyu-wrap">
@@ -61,10 +64,21 @@
         <!-- 排行榜 -->
         <div id="leaderboard">
             <h2>排行榜</h2>
-            <ol id="leaderboard-list"></ol>
+            <table id="leaderboard-list">
+                <!-- 表頭 -->
+                <thead>
+                    <tr>
+                        <th>名次</th>
+                        <th>法號</th>
+                        <th>功德</th>
+                    </tr>
+                </thead>
+                <!-- 資料列，由 JS 動態填入 -->
+                <tbody id="leaderboard-body"></tbody>
+            </table>
         </div>
     </div>
-    
+
     <!-- 引入外部 JS 檔案，放在 body 最底部確保 HTML 先載入完畢 -->
     <script type="module" src="script.js"></script>
 </body>
