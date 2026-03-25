@@ -12,34 +12,62 @@
 </head>
 
 <body>
-    <h1>電子木魚</h1>
+    <div class="main-container">
+        <div id="game-area">
 
-    <!-- 顯示功德數字，id="count" 讓 JS 找到它 -->
-    <p id="merit">功德
-        <br>
-        <span id="count">0</span>
-    </p>
 
-    <!-- 用一個 div 把木魚棒和木魚包在一起，方便疊加定位 -->
-    <div id="muyu-wrap" onclick="knock()">
+            <!-- 進入遊戲前的名字輸入畫面，預設蓋住整個畫面 -->
+            <div id="name-screen">
+                <div id="name-box">
+                    <h2>歡迎來到電子木魚</h2>
+                    <p>請輸入你的法號</p>
+                    <input type="text" id="player-name" placeholder="輸入名字" maxlength="10">
+                    <button id="random-btn">隨機法號</button>
+                    <button id="start-btn">開始敲木魚</button>
+                </div>
+            </div>
 
-        <!-- 木魚 -->
-        <img id="muyu" src="muyu.png" alt="木魚">
+            <div class="game-header">
 
-        <!-- 木魚棒，預設在木魚上方 -->
-        <img id="stick" src="stick.png" alt="木魚棒">
 
+                <h1>電子木魚</h1>
+                <div class="button-area">
+                    <button id="submit-btn">提交功德</button>
+                    <button id="restart">重新開始</button>
+                </div>
+            </div>
+
+
+
+            <!-- 顯示功德數字，id="count" 讓 JS 找到它 -->
+            <p id="merit">功德
+                <br>
+                <span id="count">0</span>
+            </p>
+
+            <!-- 用一個 div 把木魚棒和木魚包在一起，方便疊加定位 -->
+            <div id="muyu-wrap">
+
+                <!-- 木魚 -->
+                <img id="muyu" src="muyu.png" alt="木魚">
+
+                <!-- 木魚棒，預設在木魚上方 -->
+                <img id="stick" src="stick.png" alt="木魚棒">
+
+            </div>
+
+        </div>
+
+        <!-- 排行榜 -->
+        <div id="leaderboard">
+            <h2>排行榜</h2>
+            <ol id="leaderboard-list"></ol>
+            <button id="refresh-btn">重新整理排行榜</button>
+        </div>
     </div>
-
-
-
-    <button id="restart" onclick="restart()">重新開始</button>
-
+    
     <!-- 引入外部 JS 檔案，放在 body 最底部確保 HTML 先載入完畢 -->
-    <script src="script.js"></script>
-
-
-
+    <script type="module" src="script.js"></script>
 </body>
 
 </html>

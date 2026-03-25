@@ -1,3 +1,64 @@
+// 引入 Firebase 功能（必須放在最頂端）
+import { submitScore, getLeaderboard } from './firebase.js';
+
+
+// 隨機法號清單
+const randomNames = [
+    '升天大聖', '慧明法師', '無量真人', '渡劫散人',
+    '逍遙道士', '般若居士', '清虛子', '無為真君',
+    '悟空行者', '普渡神僧', '超然散人', '妙法禪師'
+];
+
+// 隨機取一個法號
+function getRandomName() {
+    return randomNames[Math.floor(Math.random() * randomNames.length)];
+}
+
+// 玩家名字，進入遊戲後設定
+let playerName = '';
+
+// 開始遊戲：儲存名字並隱藏遮罩
+async function startGame() {
+    const name = document.getElementById('player-name').value.trim();
+
+    if (!name) {
+        alert('請輸入名字！');
+        return;
+    }
+/*
+    // 檢查排行榜是否已有同名玩家
+    const data = await getLeaderboard();
+    const isDuplicate = data.some(item => item.name === name);
+
+    if (isDuplicate) {
+        alert(`「${name}」已經有人用了，請換一個法號！`);
+        return;
+    }
+*/
+    // 儲存名字
+    playerName = name;
+
+    // 進入遊戲時功德歸零，確保每個玩家從 0 開始
+    count = 0;
+    document.getElementById('count').textContent = count;
+    localStorage.removeItem('merit');
+
+
+    // 隱藏遮罩，顯示遊戲
+    document.getElementById('name-screen').classList.add('hidden');
+}
+
+// 提交分數（現在直接用 playerName，不用再輸入）
+async function handleSubmit() {
+    if (!playerName) {
+        alert('請先輸入名字！');
+        return;
+    }
+
+    await submitScore(playerName, count);
+    alert(`${playerName} 的 ${count} 功德已提交！`);
+    loadLeaderboard();
+}
 
 // 用 localStorage 讀取上次的功德值，如果沒有就從 0 開始
 let count = Number(localStorage.getItem('merit')) || 0;
@@ -77,8 +138,7 @@ function showFloatText() {
 
 // 重新開始
 function restart() {
-    // 跳出確認視窗，避免誤觸
-    if (!confirm('確定要清除所有功德嗎？')) return;
+
     count = 0;
 
     // 更新畫面上的數字
@@ -88,9 +148,54 @@ function restart() {
     localStorage.removeItem('merit');
 }
 
-// 監聽鍵盤，按下空白鍵也能敲
+
+
+
+
+
+// 載入排行榜
+async function loadLeaderboard() {
+    const list = document.getElementById('leaderboard-list');
+
+    // 清空舊資料
+    list.innerHTML = '';
+
+    const data = await getLeaderboard();
+
+    // 把每筆資料加入排行榜
+    data.forEach((item, index) => {
+        const li = document.createElement('li');
+        li.textContent = `${item.name}：${item.score} 功德`;
+        list.appendChild(li);
+    });
+}
+
+
+
+// 綁定點擊木魚
+document.getElementById('muyu-wrap').addEventListener('click', knock);
+
+// 綁定重新開始
+document.getElementById('restart').addEventListener('click', restart);
+
+// 綁定提交功德
+document.getElementById('submit-btn').addEventListener('click', handleSubmit);
+
+// 綁定重新整理排行榜
+document.getElementById('refresh-btn').addEventListener('click', loadLeaderboard);
+
+// 按空白鍵也能敲
 document.addEventListener('keydown', function (e) {
-    if (e.code === 'Space') {
-        knock();
-    }
+    if (e.code === 'Space') knock();
 });
+
+// 綁定開始按鈕
+document.getElementById('start-btn').addEventListener('click', startGame);
+
+// 點隨機法號按鈕，自動填入輸入框
+document.getElementById('random-btn').addEventListener('click', function() {
+  document.getElementById('player-name').value = getRandomName();
+});
+
+// 頁面載入時自動顯示排行榜
+loadLeaderboard();

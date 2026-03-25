@@ -1,3 +1,33 @@
+/* 遮罩：蓋住整個畫面 */
+#name-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    /* 確保在最上層 */
+}
+
+/* 名字輸入框 */
+#name-box {
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    text-align: center;
+}
+
+/* 隱藏遮罩用的 class */
+#name-screen.hidden {
+    display: none;
+}
+
+
+
 /* 浮字的樣式 */
 .float-text {
     position: fixed;
@@ -24,16 +54,12 @@
 
 /* 讓整個頁面內容置中 */
 body {
-    text-align: center;
     background: linear-gradient(180deg, #dcb772, #37284f);
     min-height: 100vh;
     /* 確保漸層撐滿整個視窗高度 */
 }
 
-h1 {
 
-    margin: 50px;
-}
 
 p {
     margin: 20px;
@@ -42,6 +68,165 @@ p {
 /* 整個功德區塊 */
 #merit {
     font-size: 24px;
+}
+
+
+/* --- 1. 基礎佈局：手機優先 (Mobile First) --- */
+/* 主容器：預設為垂直排列（適合手機） */
+.main-container {
+    display: flex;
+    flex-direction: column; /* 讓子元素像疊樂高一樣上下排 */
+    align-items: center;    /* 水平居中 */
+    gap: 30px;              /* 區塊之間的間距 */
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box; /* 確保 padding 不會撐破寬度 */
+}
+
+/* 遊戲區塊基礎樣式 */
+#game-area {
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* 排行榜基礎樣式 */
+#leaderboard {
+    width: 100%;
+    max-width: 600px;
+    color: aliceblue;
+    background: rgba(55, 36, 66, 0.5);
+    border-radius: 12px;
+    padding: 20px;
+    box-sizing: border-box;
+
+}
+
+/* 意思：選取 id 為 leaderboard 裡面所有的 h2 標籤 */
+#leaderboard h2 {
+    text-align: center;
+}
+
+#refresh-btn {
+    /* 1. 將按鈕從「行內元素」變成「區塊元素」 */
+    display: block;
+    
+    /* 2. 左右邊距設為自動（auto），它就會推到中間 */
+    margin-left: auto;
+    margin-right: auto;
+    
+    /* 3. 加上上方的間距 */
+    margin-top: 15px;
+}
+
+
+/* --- 2. 響應式切換：大螢幕 (電腦版) --- */
+/* 當視窗寬度大於 992px 時執行以下樣式 */
+@media (min-width: 992px) {
+    .main-container {
+        flex-direction: row;      /* 切換為水平排列 */
+        justify-content: center;  /* 整體水平居中 */
+        /* align-items: flex-start;  讓兩個區塊對齊頂部，不要被拉長 */
+        max-width: 1200px;        /* 寬螢幕時限制總寬度 */
+
+        padding: 20px;
+    }
+
+    /* 調整順序：讓排行榜 (order: 1) 出現在遊戲區 (order: 2) 的左邊 */
+    #leaderboard {
+        flex: 1;           /* 佔據一份空間 */
+        order: 1;          /* 順序設為 1，會排在最左邊 */
+        max-width: 300px;  /* 限制排行榜寬度，不要太寬 */
+        margin: 0;                /* 取消手機版的 margin */
+    }
+
+    #game-area {
+        flex: 2;           /* 遊戲區佔據較大的空間 (兩份) */
+        order: 2;          /* 順序設為 2，排在右邊 */
+        max-width: none;          /* 取消手機版的 600px 限制 */
+    }
+
+    #leaderboard h2 {
+    text-align: center;
+    }   
+
+
+
+}
+
+
+
+
+/* 父容器：作為定位的基點 */
+.game-header {
+    position: relative;
+    /* 作為絕對定位的基準點 */
+    display: flex;
+    justify-content: center;
+    /* 讓標題 H1 絕對水平置中 */
+    align-items: center;
+    width: 100%;
+    max-width: 1000px;
+    margin: 40px   auto;
+    /* 調整上下間距並水平置中 */
+    padding: 20px 0;
+}
+
+h1 {
+    font-size: 3rem;
+    margin: 0;
+    border-radius: 15px;
+    text-align: center;
+}
+
+/* 懸浮功能面板：定位到左上層 */
+.button-area {
+    position: absolute;    /* 脫離文件流，不影響 flex 置中 */
+    right: -60px;    /* 貼緊父容器右側，數值可依需求調整 */
+    top: 50%;    /* 垂直置中起始點 */
+    transform: translateY(-50%);   /* 修正垂直置中偏移 */
+    display: flex;          /* 讓按鈕橫向排列 */
+    gap: 10px;              /* 按鈕之間的間距 */
+
+    z-index: 10;
+    /* 確保在 h1 之上 */
+}
+
+/* 按鈕通用樣式 */
+#submit-btn, #restart {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    white-space: nowrap;    /* 防止文字折行 */
+    transition: all 0.2s;
+}
+
+/* 提交按鈕顏色 */
+#submit-btn {
+    background-color: rgba(255, 192, 55, 0.922) ;
+    color: white;
+    box-shadow: 2px 2px 5px rgba(255, 28, 28, 0.1);
+}
+
+/* 重新開始按鈕顏色 */
+#restart {
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ccc;
+}
+
+#submit-btn:hover, #restart:hover {
+    opacity: 0.8;
+    transform: translateY(-2px); /* 懸浮時稍微往上飄 */
+}
+
+
+#submit-area {
+    margin: 5px;
 }
 
 /* 單獨控制數字大小 */
@@ -133,3 +318,8 @@ p {
 #muyu.hitting {
     animation: muyuHit 0.3s ease-out forwards;
 }
+
+
+
+
+
