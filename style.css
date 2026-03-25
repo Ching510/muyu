@@ -389,7 +389,7 @@ h1 {
     .button-area {
         position: absolute;
         /* 脫離文件流，不影響 flex 置中 */
-        right: -20px;
+        right: 10%;
         /* 貼緊父容器右側，數值可依需求調整 */
         top: 100px;
         /* 垂直置中起始點 */
