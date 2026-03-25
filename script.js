@@ -181,9 +181,6 @@ document.getElementById('restart').addEventListener('click', restart);
 // 綁定提交功德
 document.getElementById('submit-btn').addEventListener('click', handleSubmit);
 
-// 綁定重新整理排行榜
-document.getElementById('refresh-btn').addEventListener('click', loadLeaderboard);
-
 // 按空白鍵也能敲
 document.addEventListener('keydown', function (e) {
     if (e.code === 'Space') knock();
