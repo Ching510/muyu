@@ -57,7 +57,8 @@ body {
     background: linear-gradient(180deg, #dcb772, #37284f);
     min-height: 100vh;
     /* 確保漸層撐滿整個視窗高度 */
-    zoom: 0.9;  /* 縮小到 90% */
+    zoom: 0.9;
+    /* 縮小到 90% */
 }
 
 /* 消除點擊圖片時出現的藍框 */
@@ -69,14 +70,12 @@ body {
     outline: none !important;
 }
 
-p{
+p {
     margin: 0px;
 }
 
 /* 整個功德區塊 */
-#merit-area{
-
-}
+#merit-area {}
 
 #merit {
     font-size: 24px;
@@ -114,7 +113,7 @@ p{
     width: 100%;
     max-width: 600px;
     text-align: center;
-    padding: 20px ;
+    padding: 20px;
     padding-bottom: 100px;
     box-sizing: border-box;
 }
@@ -133,7 +132,8 @@ p{
 
 #leaderboard-list {
     width: 100%;
-    border-collapse: collapse;      /* 合併邊框，不會有雙線 */
+    border-collapse: collapse;
+    /* 合併邊框，不會有雙線 */
     margin-top: 10px;
 }
 
@@ -172,69 +172,6 @@ p{
 }
 
 
-/* --- 2. 響應式切換：大螢幕 (電腦版) --- */
-/* 當視窗寬度大於 992px 時執行以下樣式 */
-@media (min-width: 823px) {
-    .main-container {
-        flex-direction: row;
-        /* 切換為水平排列 */
-        justify-content: center;
-        /* 整體水平居中 */
-        /* align-items: flex-start;  讓兩個區塊對齊頂部，不要被拉長  */
-        max-width: 1200px;
-        /* 寬螢幕時限制總寬度 */
-        max-height: max-content;
-        padding: 20px;
-    }
-
-    /* 調整順序：讓排行榜 (order: 1) 出現在遊戲區 (order: 2) 的左邊 */
-    #leaderboard {
-        flex: 1;
-        /* 佔據一份空間 */
-        order: 1;
-        /* 順序設為 1，會排在最左邊 */
-        max-width: 250px;
-        /* 限制排行榜寬度，不要太寬 */
-        margin: 0;
-        /* 取消手機版的 margin */
-        position: relative;
-        z-index: 10;
-
-    }
-
-    #game-area {
-        flex: 2;
-        /* 遊戲區佔據較大的空間 (兩份) */
-        order: 2;
-        /* 順序設為 2，排在右邊 */
-        max-width: none;
-        /* 取消手機版的 600px 限制 */
-    }
-
-    #leaderboard h2 {
-        text-align: center;
-    }
-
-    .button-area {
-    position: absolute;
-    /* 脫離文件流，不影響 flex 置中 */
-    right: -20px;
-    /* 貼緊父容器右側，數值可依需求調整 */
-    top: 100px;
-    /* 垂直置中起始點 */
-    transform: translateY(-50%);
-    /* 修正垂直置中偏移 */
-    display: flex;
-    /* 讓按鈕橫向排列 */
-    gap: 10px;
-    /* 按鈕之間的間距 */
-
-    z-index: 10;
-    /* 確保在 h1 之上 */
-}
-
-}
-
 
 
 
@@ -262,13 +199,12 @@ h1 {
 
 /* 懸浮功能面板：定位到左上層 */
 .button-area {
-    position: absolute;
-    /* 脫離文件流，不影響 flex 置中 */
-
-    top: 600px;
+    position: relative;
+    top: 570px;
     /* 垂直置中起始點 */
     transform: translateY(-50%);
     /* 修正垂直置中偏移 */
+    justify-content: center; /* 水平置中 */
     display: flex;
     /* 讓按鈕橫向排列 */
     gap: 10px;
@@ -333,7 +269,7 @@ h1 {
     /* 讓 margin: auto 生效 */
     margin: 0 auto;
     /* 左右自動分配，永遠置中 */
-    
+
     top: -25px;
 
 
@@ -401,4 +337,81 @@ h1 {
 
 #muyu.hitting {
     animation: muyuHit 0.3s ease-out forwards;
+}
+
+
+
+
+
+/* --- 2. 響應式切換：大螢幕 (電腦版) --- */
+/* 當視窗寬度大於 992px 時執行以下樣式 */
+@media (min-width: 823px) {
+    .main-container {
+        flex-direction: row;
+        /* 切換為水平排列 */
+        justify-content: center;
+        /* 整體水平居中 */
+        /* align-items: flex-start;  讓兩個區塊對齊頂部，不要被拉長  */
+        max-width: 1200px;
+        /* 寬螢幕時限制總寬度 */
+        max-height: max-content;
+        padding: 20px;
+    }
+
+    /* 調整順序：讓排行榜 (order: 1) 出現在遊戲區 (order: 2) 的左邊 */
+    #leaderboard {
+        flex: 1;
+        /* 佔據一份空間 */
+        order: 1;
+        /* 順序設為 1，會排在最左邊 */
+        max-width: 250px;
+        /* 限制排行榜寬度，不要太寬 */
+        margin: 0;
+        /* 取消手機版的 margin */
+        position: relative;
+        z-index: 10;
+
+    }
+
+    #game-area {
+        flex: 2;
+        /* 遊戲區佔據較大的空間 (兩份) */
+        order: 2;
+        /* 順序設為 2，排在右邊 */
+        max-width: none;
+        /* 取消手機版的 600px 限制 */
+    }
+
+    #leaderboard h2 {
+        text-align: center;
+    }
+
+    .button-area {
+        position: absolute;
+        /* 脫離文件流，不影響 flex 置中 */
+        right: -20px;
+        /* 貼緊父容器右側，數值可依需求調整 */
+        top: 100px;
+        /* 垂直置中起始點 */
+        transform: translateY(-50%);
+        /* 修正垂直置中偏移 */
+        display: flex;
+        /* 讓按鈕橫向排列 */
+        gap: 10px;
+        /* 按鈕之間的間距 */
+
+        z-index: 10;
+        /* 確保在 h1 之上 */
+    }
+
+    /* 懸浮功能面板：定位到左上層 */
+    .button-area {
+        position: absolute;     /* 脫離文件流，不影響 flex 置中 */
+        top: 600px;     /* 垂直置中起始點 */
+        transform: translateY(-50%);       /* 修正垂直置中偏移 */
+        display: flex;      /* 讓按鈕橫向排列 */
+        gap: 10px;      /* 按鈕之間的間距 */
+        z-index: 10;        /* 確保在 h1 之上 */
+    }
+
 }
